@@ -81,16 +81,16 @@ int main()
     g.addEdge(4, 8);
     g.addEdge(5, 9);
     g.addEdge(6, 7);
-    cout<< "Enter source Node ";
-    cin>> src;
-    cout << "DFS starting from Node: "<<src<<endl;
+    cout << "Enter source Node ";
+    cin >> src;
+    cout << "DFS starting from Node: " << src << endl;
 
     g.dfs(src);
     cout << endl;
 
     g.resetVisited();
 
-    cout << "BFS starting from Node: "<<src<<endl;
+    cout << "BFS starting from Node: " << src << endl;
     g.bfs(src);
     cout << endl;
 
