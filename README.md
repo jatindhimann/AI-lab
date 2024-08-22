@@ -1,2 +1,2 @@
 ## Assignment 1
-Breadth First Search and Depth First Search - /master/Assignment1/BFS_DFS.cpp
+<a href= "/master/Assignment1/BFS_DFS.cpp">Breadth First Search and Depth First Search</a>
