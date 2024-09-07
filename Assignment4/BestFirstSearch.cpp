@@ -130,7 +130,7 @@ int main()
     Graph g;
     string str;
 
-    cout << "Enter a string to create the graph: ";
+    cout << "Enter a string to create the graph: "<<endl;
     getline(cin, str);
 
     g.createGraph(str);
@@ -144,4 +144,3 @@ int main()
 
     return 0;
 }
-
