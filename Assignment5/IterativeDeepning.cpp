@@ -1,44 +1,23 @@
 // Iterative Deepening by exploring best node first.
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <climits>
 using namespace std;
 
-typedef pair<int, int> pp;
-
-bool DLS(int curNode, int target, int limit, const vector<vector<int>> &adj, vector<int> &gValues, vector<bool> &visited)
+bool DLS(int curNode, int target, int limit, const vector<vector<int>> &adj, vector<int> &visited)
 {
     if (curNode == target)
         return true;
     if (limit <= 0)
         return false;
 
-    visited[curNode] = true;
-    priority_queue<pp, vector<pp>, greater<pp>> pq;
-    pq.push({gValues[curNode], curNode});
+    visited[curNode] = 1;
 
-    while (!pq.empty())
+    for (int i = 0; i < adj.size(); i++)
     {
-        int nodeId = pq.top().second;
-        int currG = pq.top().first;
-        pq.pop();
-
-        for (int i = 0; i < adj.size(); i++)
+        if (adj[curNode][i] != 0 && !visited[i])
         {
-            if (adj[nodeId][i] != 0 && !visited[i])
-            {
-                int newG = currG + adj[nodeId][i];
-
-                if (newG < gValues[i])
-                {
-                    gValues[i] = newG;
-                    pq.push({newG, i});
-
-                    if (i == target)
-                        return true;
-                }
-            }
+            if (DLS(i, target, limit - 1, adj, visited))
+                return true;
         }
     }
 
@@ -47,14 +26,11 @@ bool DLS(int curNode, int target, int limit, const vector<vector<int>> &adj, vec
 
 bool IDS(int startNode, int targetNode, int maxDepth, const vector<vector<int>> &adj)
 {
-    vector<int> gValues(adj.size(), INT_MAX);
-    gValues[startNode] = 0;
-
-    for (int i = 1; i <= maxDepth; i++)
+    for (int depth = 1; depth <= maxDepth; ++depth)
     {
-        cout << "Searching with depth limit: " << i << endl;
-        vector<bool> visited(adj.size(), false);
-        if (DLS(startNode, targetNode, i, adj, gValues, visited))
+        cout << "Searching with depth limit: " << depth << endl;
+        vector<int> visited(adj.size(), 0);
+        if (DLS(startNode, targetNode, depth, adj, visited))
             return true;
     }
 
@@ -75,14 +51,14 @@ int main()
         {0, 0, 0, 0, 0, 0, 12, 14, 0, 0},
         {0, 0, 0, 0, 0, 0, 14, 15, 0, 0}};
 
-    int startNode = 0;
-    int goalNode = 9;
-    int maxDepth = 5; 
+    int startNode = 0; 
+    int targetNode = 9; 
+    int maxDepth = 5;  
 
-    if (IDS(startNode, goalNode, maxDepth, grid))
-        cout << "Target node " << goalNode << " found!" << endl;
+    if (IDS(startNode, targetNode, maxDepth, grid))
+        cout << "Target node " << targetNode << " found!" << endl;
     else
-        cout << "Target node " << goalNode << " not found within depth " << maxDepth << "." << endl;
+        cout << "Target node " << targetNode << " not found within depth " << maxDepth << "." << endl;
 
     return 0;
 }
